@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/screens/login_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   // Controllers
@@ -110,10 +111,10 @@ class RegisterScreen extends StatelessWidget {
                   child: MaterialButton(
                     minWidth: 350,
                     child: Text(
-                      "Login",
+                      "Submit",
                       style: TextStyle(color: Colors.white),
                     ),
-                    color: Color.fromARGB(255, 15, 15, 15),
+                    color: Color.fromARGB(255, 0, 156, 5),
                     onPressed: () {},
                   ),
                 ),
@@ -126,7 +127,12 @@ class RegisterScreen extends StatelessWidget {
 
                 // Text-Logo
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()));
+                    },
                     child: Text(
                       "Already have an account Login Here",
                       style: TextStyle(fontSize: 12),
