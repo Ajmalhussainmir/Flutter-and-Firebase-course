@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/screens/login_screen.dart';
+import 'package:flutter_application_3/services/auth_service.dart';
 
 class RegisterScreen extends StatelessWidget {
   // Controllers
@@ -22,7 +24,7 @@ class RegisterScreen extends StatelessWidget {
 
       body: Center(
           child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 10),
         child: Container(
           color: Colors.grey[200],
           height: 400,
@@ -115,7 +117,35 @@ class RegisterScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                     color: Color.fromARGB(255, 0, 156, 5),
-                    onPressed: () {},
+
+                    // error message code
+                    onPressed: () async {
+                      // email controllor
+                      if (emailController.text == "" ||
+                          passwordController.text == "") {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("All fields are required!!"),
+                          backgroundColor: Colors.red,
+                        ));
+
+                        // password controlloer
+                      // } else if (passwordController.text ==
+                      //     confirmPasswordController.text) {
+                      //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      //     content: Text("All password not matach!!"),
+                      //     backgroundColor: Colors.red,
+                      //   ));
+
+                        // email controllor password controllor
+                      } else {
+                        User? result = await AuthService().register(
+                            emailController.text, passwordController.text);
+                        if (result != null) {
+                          print("Successful");
+                          print(result.email);
+                        }
+                      }
+                    },
                   ),
                 ),
 
@@ -125,7 +155,7 @@ class RegisterScreen extends StatelessWidget {
                   height: 20,
                 ),
 
-                // Text-Logo
+                // Already have an account Login Here?
                 TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -134,7 +164,7 @@ class RegisterScreen extends StatelessWidget {
                               builder: (context) => LoginScreen()));
                     },
                     child: Text(
-                      "Already have an account Login Here",
+                      "Already have an account Login Here?",
                       style: TextStyle(fontSize: 12),
                     ))
               ],
